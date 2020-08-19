@@ -50,8 +50,15 @@ const dramaMoviesRate = (arr) => {
 
 const turnHoursToMinutes = (arr) => {
   return arr.map((movie) => {
-    movie.duration = convertHour(movie.duration);
-    return movie;
+    let newMovie = {};
+    newMovie.title = movie.title
+    newMovie.year = movie.year
+    newMovie.director = movie.director
+    newMovie.duration = convertHour(movie.duration);
+    newMovie.genre = movie.genre
+    newMovie.rate = movie.rate
+    
+    return newMovie;
   });
 
 };
