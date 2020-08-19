@@ -57,6 +57,7 @@ const turnHoursToMinutes = (arr) => {
 };
 
 function convertHour(str) {
+  if (typeof str === 'number') return str
   return str
     .split(" ")
     .map((elem) => {
@@ -81,21 +82,30 @@ const bestYearAvg = (arr) => {
       rate: []
     }
     arr.map(movie => {
+      // array com lista de notas de cada ano
       let yearRate = []
       for (let i = 0; i < arr.length; i++){
         if (movie.year === arr[i].year) yearRate.push(arr[i].rate)
       }
-
+      // média de cada ano
       let average = yearRate.reduce((acc, cv) => acc + cv, 0)/yearRate.length
+      // adicionando no obj a lista de anos com suas respectivas médias
       obj.year.push(movie.year)
       obj.rate.push(average)
       return movie
     })
-    let indexOfBestRate = obj.rate.indexOf(Math.max(...obj.rate))
 
-    return `The best year was ${obj.year[indexOfBestRate]} with an average rate of ${obj.rate[indexOfBestRate]}`;
+    // melhor média
+    let bestRate = Math.max(...obj.rate)
+    let indexOfBestRate = obj.rate.indexOf(bestRate)
+    
+    // anos com a mesma melhor média
+    let bestYears = []
+    obj.rate.map((rating, idx) => {
+      if (rating === bestRate) return bestYears.push(obj.year[idx])
+      return
+    })
 
+    return `The best year was ${Math.min(...bestYears)} with an average rate of ${obj.rate[indexOfBestRate]}`;
   }
-
-
 };
